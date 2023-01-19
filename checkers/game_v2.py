@@ -12,7 +12,8 @@ class Game:
 
         self.board_piece_height = 23
         self.zero_posistion = [105, -95] # [106.53, -94.2, 23.53]
-        self.avg_movement = 27.5
+        self.avg_movement = 27.0
+        self.arm_height = 120
         
         self.swift = SwiftAPI(filters={'hwid': 'USB VID:PID=2341:0042'}, cmd_pend_size=2, callback_thread_pool_size=1)
         self.swift.waiting_ready()
@@ -113,7 +114,7 @@ class Game:
         self.swift.set_pump(on=False)
 
         # Move to old position
-        self.swift.set_position(z=100, speed=self.speed)
+        self.swift.set_position(z=self.arm_height, speed=self.speed)
         self.swift.flush_cmd(wait_stop=True)
         self.swift.set_position(x=old_x_pos, y=old_y_pos, speed=self.speed)
         self.swift.flush_cmd(wait_stop=True)
@@ -127,7 +128,7 @@ class Game:
         new_x_pos, new_y_pos = self.calculate_coordinates(new_pos)
 
         # Move to new position
-        self.swift.set_position(z=100, speed=self.speed)
+        self.swift.set_position(z=self.arm_height, speed=self.speed)
         self.swift.flush_cmd(wait_stop=True)
         self.swift.set_position(x=new_x_pos, y=new_y_pos, speed=self.speed)
         self.swift.flush_cmd(wait_stop=True)
@@ -139,7 +140,7 @@ class Game:
 
         # Move away from board (turn right)
         # [6.24, -169.38, 61.84]
-        self.swift.set_position(z=100, speed=self.speed)
+        self.swift.set_position(z=self.arm_height, speed=self.speed)
         self.swift.flush_cmd(wait_stop=True)
         self.swift.set_position(x=5, y=-160, speed=self.speed)
         self.swift.flush_cmd(wait_stop=True)
@@ -152,7 +153,7 @@ class Game:
             self.swift.set_pump(on=False)
 
             # Move to old position
-            self.swift.set_position(z=100, speed=self.speed)
+            self.swift.set_position(z=self.arm_height, speed=self.speed)
             self.swift.flush_cmd(wait_stop=True)
             self.swift.set_position(x=x_pos, y=y_pos, speed=self.speed)
             self.swift.flush_cmd(wait_stop=True)
@@ -164,7 +165,7 @@ class Game:
             time.sleep(1)
 
             # Move away from board (turn right)
-            self.swift.set_position(z=100, speed=self.speed)
+            self.swift.set_position(z=self.arm_height, speed=self.speed)
             self.swift.flush_cmd(wait_stop=True)
             self.swift.set_position(x=5, y=-160, speed=self.speed)
             self.swift.flush_cmd(wait_stop=True)
