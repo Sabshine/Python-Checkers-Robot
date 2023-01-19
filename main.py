@@ -2,6 +2,7 @@
 import pygame
 import cv2 as cv
 import copy
+import gpiozero
 
 import checkers
 from checkers.constants import WIDTH, HEIGHT, SQUARE_SIZE, RED, WHITE
@@ -10,7 +11,7 @@ from checkers.board import Board
 from minimax.algorithm import minimax
 from detection.live_detection import detect_white_pieces_on_board, calculate_new_position, detect_movement, grouper
 from detection.live_detect_pieces import detect_pieces_live
-from gpiozero import Button
+
 
 FPS = 60
 
