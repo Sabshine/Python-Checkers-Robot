@@ -201,7 +201,7 @@ def main():
     clock = pygame.time.Clock()
     game = Game(WIN, muted)
 
-    cap = cv.VideoCapture(0);
+    cap = cv.VideoCapture(0)
     global move
     global invalid_move
 
