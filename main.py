@@ -233,14 +233,14 @@ def main():
                 invalid_move = True
             move = False
         
-        if button_reset.is_pressed:
-            print("reset")
-            game.reset()
-            reset_variables()
+        # if button_reset.is_pressed:
+        #     print("reset")
+        #     game.reset()
+        #     reset_variables()
 
-        if button_mute.is_pressed:
-            print("mute")
-            muted = not muted
+        # if button_mute.is_pressed:
+        #     print("mute")
+        #     muted = not muted
             
         game.update()
     
