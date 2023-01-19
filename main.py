@@ -27,9 +27,9 @@ white_pieces = [] # [{'cv':[x,y], 'ai':[row,col]}, {...}]
 block_distance = 0 # calculated with 5x - 7x: Outcome (if positive) is block FORWARD (to the right when looking at stream)
 
 # HARDWARE
-button_move = Button(17)
-button_reset = Button(27)
-button_mute = Button(22)
+button_move = gpiozero.Button(17)
+button_reset = gpiozero.Button(27)
+button_mute = gpiozero.Button(22)
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Checkers')
