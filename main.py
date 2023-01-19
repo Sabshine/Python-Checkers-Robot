@@ -230,7 +230,7 @@ def main():
                 selection_result = game.select(old_row_col[0], old_row_col[1], new_row_col[0], new_row_col[1])
                 print("Selection Result:")
                 print(selection_result)
-                if not selection_result:
+                if selection_result:
                     print("invalid move")
                     invalid_move = True
             move = False
