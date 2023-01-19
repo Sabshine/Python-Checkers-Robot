@@ -227,10 +227,10 @@ def main():
             print("Result:")
             print(result)
             if result:
-                game.select(old_row_col[0], old_row_col[1], new_row_col[0], new_row_col[1])
-            else:
-                print("invalid move")
-                invalid_move = True
+                selection_result = game.select(old_row_col[0], old_row_col[1], new_row_col[0], new_row_col[1])
+                if not selection_result:
+                    print("invalid move")
+                    invalid_move = True
             move = False
         
         if button_reset.is_pressed:
