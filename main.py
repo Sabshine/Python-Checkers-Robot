@@ -105,16 +105,8 @@ def start_capture(cap, game):
 
     cv.imshow('frame', frame)
 
-    # Start detecting current state of checkers pieces on 's' input
-    # Can be changed to player/start button
-    if button_move.is_pressed:
-        # Recognises all white pieces. Best for testing new functions
-        img = cv.imread("img/movement2/board-pieces-1.png")
-        img = cv.resize(img, (640, 480))
-
-        img_1 = cv.imread("img/movement2/board-pieces-2.png")
-        img_1 = cv.resize(img_1, (640, 480))
-
+    # if button_move.is_pressed:
+    if cv.waitKey(1) == ord('s'):
         # When checking new state safe old state
         global backup_old_white_pieces
         global old_white_pieces
@@ -201,17 +193,17 @@ def main():
     clock = pygame.time.Clock()
     game = Game(WIN, muted)
 
-    cap = cv.VideoCapture(0)
+    cap = cv.VideoCapture(0);
     global move
     global invalid_move
 
     while run:
-        if button_reset.is_pressed:
-            game.reset()
-            reset_variables()
+        # if button_reset.is_pressed:
+        #     game.reset()
+        #     reset_variables()
 
-        if button_mute.is_pressed:
-            muted = not muted
+        # if button_mute.is_pressed:
+        #     muted = not muted
 
         start_capture(cap, game)
         detect_pieces_live(cap) # Check detection / camera position
