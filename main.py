@@ -106,7 +106,7 @@ def start_capture(cap, game):
     cv.imshow('frame', frame)
 
     # if button_move.is_pressed:
-    if cv.waitkey(1) & 0xff == ord('s'):
+    if cv.waitKey(1) & 0xff == ord('s'):
         print("move")
         # When checking new state safe old state
         global backup_old_white_pieces
