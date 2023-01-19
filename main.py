@@ -224,6 +224,8 @@ def main():
         
         if move == True:
             result = game.select(old_row_col[0], old_row_col[1], new_row_col[0], new_row_col[1])
+            print("Result:")
+            print(result)
             if result:
                 game.select(old_row_col[0], old_row_col[1], new_row_col[0], new_row_col[1])
             else:
