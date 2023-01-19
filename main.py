@@ -106,6 +106,7 @@ def start_capture(cap, game):
     cv.imshow('frame', frame)
 
     if button_move.is_pressed:
+        print("move")
         # When checking new state safe old state
         global backup_old_white_pieces
         global old_white_pieces
@@ -198,10 +199,12 @@ def main():
 
     while run:
         if button_reset.is_pressed:
+            print("reset")
             game.reset()
             reset_variables()
 
         if button_mute.is_pressed:
+            print("mute")
             muted = not muted
 
         start_capture(cap, game)
