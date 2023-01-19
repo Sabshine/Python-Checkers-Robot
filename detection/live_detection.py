@@ -135,7 +135,7 @@ def normal_round(n):
     return math.ceil(n)
 
 
-def calculate_new_position(old_white_pieces, white_pieces, block_distance):
+def calculate_new_position(old_white_pieces, white_pieces, block_distance, muted):
     old_move = detect_movement(old_white_pieces, white_pieces, True)
     new_move = detect_movement(white_pieces, old_white_pieces, False)
     print(old_move, new_move)
@@ -163,9 +163,10 @@ def calculate_new_position(old_white_pieces, white_pieces, block_distance):
         else:
             new_row_col.append(old_row_col[1]-abs(step_y))
 
-        print("A piece has moved from  the position: {} to a new position of: {}".format(old_white_pieces[detect_movement(old_white_pieces, white_pieces, False)]["cv"], white_pieces[detect_movement(white_pieces, old_white_pieces, False)]["cv"]))
-        print("Old row,col : " + str(old_row_col))
-        print("New row,col : " + str(new_row_col))
+        if muted:
+            print("A piece has moved from  the position: {} to a new position of: {}".format(old_white_pieces[detect_movement(old_white_pieces, white_pieces, False)]["cv"], white_pieces[detect_movement(white_pieces, old_white_pieces, False)]["cv"]))
+            print("Old row,col : " + str(old_row_col))
+            print("New row,col : " + str(new_row_col))
 
         # Add new row,col to current "white_pieces"
         return old_row_col, new_row_col

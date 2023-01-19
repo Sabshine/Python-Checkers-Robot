@@ -6,9 +6,10 @@ import time
 from uarm.wrapper import SwiftAPI
 
 class Game:
-    def __init__(self, win):
+    def __init__(self, win, muted):
         self._init()
         self.win = win
+        self.muted = muted
 
         self.board_piece_height = 23
         self.zero_posistion = [105, -95] # [106.53, -94.2, 23.53]
@@ -101,15 +102,6 @@ class Game:
 
     def move_arm(self, old_pos, new_pos):
         old_x_pos, old_y_pos = self.calculate_coordinates(old_pos)
-
-        # Begin position, buggy af. Just make sure the arm doesn't touch the board
-        # begin_pos = self.swift.get_position()
-        # if int(begin_pos[0]) not in range(0,10) and abs(int(begin_pos[1])) not in range(155,165) and int(begin_pos[2]) not in range(60,70):
-        #     self.swift.set_position(z=65, speed=self.speed)
-        #     self.swift.flush_cmd(wait_stop=True)
-        #     time.sleep(2)
-        #     self.swift.set_position(x=5, y=-160, speed=self.speed)
-        #     self.swift.flush_cmd(wait_stop=True)
 
         # Pump off at start
         self.swift.set_pump(on=False)

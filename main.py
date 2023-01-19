@@ -10,6 +10,7 @@ from checkers.board import Board
 from minimax.algorithm import minimax
 from detection.live_detection import detect_white_pieces_on_board, calculate_new_position, detect_movement, grouper
 from detection.live_detect_pieces import detect_pieces_live
+from gpiozero import Button
 
 FPS = 60
 
@@ -17,6 +18,7 @@ FPS = 60
 first_check = True
 move = False
 invalid_move = False
+muted = False
 
 # CHECKER PIECES VARIABLES
 backup_old_white_pieces = [] # [{'cv':[x,y], 'ai':[row,col]}, {...}]
@@ -24,6 +26,10 @@ old_white_pieces = []  # [{'cv':[x,y], 'ai':[row,col]}, {...}]
 white_pieces = [] # [{'cv':[x,y], 'ai':[row,col]}, {...}]
 block_distance = 0 # calculated with 5x - 7x: Outcome (if positive) is block FORWARD (to the right when looking at stream)
 
+# HARDWARE
+button_move = Button(17)
+button_reset = Button(27)
+button_mute = Button(22)
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Checkers')
@@ -66,19 +72,6 @@ def get_ai_move(old, new):
     old = []
     skipped = []
     length = len(old_loc)
-    # if length > 3:
-    #     print("Zit erin ;-;")
-    #     i = 0
-    #     for group in grouper(2, old_loc, "list"):
-    #         if i == 0:
-    #             old.append(group)
-    #         else:
-    #             skipped.append(group)
-    #         i+=1
-
-    #     old_loc = []
-    #     old_loc.append(old[0][0])
-    #     old_loc.append(old[0][1])
 
     if length > 3:
         for group in grouper(2, old_loc, "list"):
@@ -113,7 +106,7 @@ def start_capture(cap, game):
 
     # Start detecting current state of checkers pieces on 's' input
     # Can be changed to player/start button
-    if cv.waitKey(1) == ord('s'):
+    if button_move.is_pressed:
         # Recognises all white pieces. Best for testing new functions
         img = cv.imread("img/movement2/board-pieces-1.png")
         img = cv.resize(img, (640, 480))
@@ -158,6 +151,7 @@ def start_capture(cap, game):
             global old_row_col
             global new_row_col
             global move
+            global muted
             
             backup_old_white_pieces = copy.deepcopy(old_white_pieces)
             old_white_pieces = copy.deepcopy(white_pieces)
@@ -165,7 +159,7 @@ def start_capture(cap, game):
             current_white_pieces, distance_none = detect_white_pieces_on_board(frame, first_check) # detect white pieces and then assign x,y and row,col
             white_pieces = copy.deepcopy(current_white_pieces)
 
-            result_old_row_col, result_new_row_col = calculate_new_position(old_white_pieces, white_pieces, block_distance) # detect movement, calculate new position
+            result_old_row_col, result_new_row_col = calculate_new_position(old_white_pieces, white_pieces, block_distance, muted) # detect movement, calculate new position
             if result_old_row_col != None and result_new_row_col != None:
                 old_row_col = result_old_row_col
                 new_row_col = result_new_row_col
@@ -184,16 +178,40 @@ def start_capture(cap, game):
                 old_white_pieces = copy.deepcopy(backup_old_white_pieces)
                 print("No move detected")
 
+def reset_variables():
+    global first_check
+    global move
+    global invalid_move
+    global backup_old_white_pieces
+    global old_white_pieces
+    global white_pieces
+    global block_distance
+    first_check = True
+    move = False
+    invalid_move = False
+    backup_old_white_pieces = []
+    old_white_pieces = []
+    white_pieces = []
+    block_distance = 0
+
 def main():
+    global muted
     run = True
     clock = pygame.time.Clock()
-    game = Game(WIN)
+    game = Game(WIN, muted)
 
-    cap = cv.VideoCapture(1);
+    cap = cv.VideoCapture(0);
     global move
     global invalid_move
 
     while run:
+        if button_reset.is_pressed:
+            game.reset()
+            reset_variables()
+
+        if button_mute.is_pressed:
+            muted = not muted
+
         start_capture(cap, game)
         detect_pieces_live(cap) # Check detection / camera position
 
