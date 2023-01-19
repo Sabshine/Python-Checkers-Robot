@@ -102,6 +102,14 @@ def delete_skipped_pieces(skipped):
 
 def start_capture(cap, game):
     ret, frame = cap.read()
+    
+    global backup_old_white_pieces
+    global old_white_pieces
+    global invalid_move
+    if invalid_move:
+        print("in if invalid move")
+        old_white_pieces = copy.deepcopy(backup_old_white_pieces)
+        invalid_move = False
 
     if cv.waitKey(1) & button_move.is_pressed:
         print("move")
@@ -111,18 +119,12 @@ def start_capture(cap, game):
         global white_pieces
         global first_check
         global block_distance
-        global invalid_move
 
         # print("Outcome elif:")
         # print(first_check == False and len(white_pieces) == game.get_player())
         print("Current pieces and pieces of player:")
         print(len(white_pieces))
         print(game.get_player())
-        
-        if invalid_move:
-            print("in if invalid move")
-            old_white_pieces = copy.deepcopy(backup_old_white_pieces)
-            invalid_move = False
             
         if len(white_pieces) != 12 and first_check:
             white_pieces = []
