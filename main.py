@@ -198,15 +198,6 @@ def main():
     global invalid_move
 
     while run:
-        if button_reset.is_pressed:
-            print("reset")
-            game.reset()
-            reset_variables()
-
-        if button_mute.is_pressed:
-            print("mute")
-            muted = not muted
-
         start_capture(cap, game)
         detect_pieces_live(cap) # Check detection / camera position
 
@@ -242,6 +233,15 @@ def main():
                 invalid_move = True
             move = False
         
+        if button_reset.is_pressed:
+            print("reset")
+            game.reset()
+            reset_variables()
+
+        if button_mute.is_pressed:
+            print("mute")
+            muted = not muted
+            
         game.update()
     
     pygame.quit()
