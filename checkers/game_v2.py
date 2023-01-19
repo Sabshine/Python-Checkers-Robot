@@ -12,7 +12,7 @@ class Game:
 
         self.board_piece_height = 23
         self.zero_posistion = [105, -95] # [106.53, -94.2, 23.53]
-        self.avg_x_movement = 27.5
+        self.avg_x_movement = 28.0
         self.avg_y_movement = 27.0
         self.arm_height = 120
         
