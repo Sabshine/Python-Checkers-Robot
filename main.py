@@ -103,10 +103,7 @@ def delete_skipped_pieces(skipped):
 def start_capture(cap, game):
     ret, frame = cap.read()
 
-    cv.imshow('frame', frame)
-
-    # if button_move.is_pressed:
-    if cv.waitKey(1) & 0xff == ord('s'):
+    if cv.waitKey(1) & button_move.is_pressed:
         print("move")
         # When checking new state safe old state
         global backup_old_white_pieces

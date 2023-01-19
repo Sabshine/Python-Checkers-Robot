@@ -44,8 +44,8 @@ def detect_white_pieces_on_board(frame, first_check):
             cv.putText(row_col_img, "row: " + str(white_pieces[x]['ai'][0]), (int(white_pieces[x]['cv'][0]), int(white_pieces[x]['cv'][1])), cv.FONT_HERSHEY_SIMPLEX, 0.4, (255, 0, 0), int(1), cv.LINE_AA)
             cv.putText(row_col_img, "col: " +  str(white_pieces[x]['ai'][1]), (int(white_pieces[x]['cv'][0]), (int(white_pieces[x]['cv'][1])+10)), cv.FONT_HERSHEY_SIMPLEX, 0.4, (255, 0, 0), int(1), cv.LINE_AA)
 
-    cv.imshow('Current state', current_state_img)
-    cv.imshow('Row Col', row_col_img)
+    # cv.imshow('Current state', current_state_img)
+    # cv.imshow('Row Col', row_col_img)
 
     return white_pieces, block_distance
 
