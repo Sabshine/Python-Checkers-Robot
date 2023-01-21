@@ -19,8 +19,8 @@ Pattern: Zig Zag\
 Infill Density: 10.0
 
 **Note:** Everything can be printed without supports, but supports are recommended for:
-- [Bolt.stl](https://github.com/Sabshine/Python-Checkers-Robot/blob/3d-models/Checkers%20Computer%20-%20Case/Button%20Holders/Bolt.stl) Hightly recommended
-- [Case Top.stl](https://github.com/Sabshine/Python-Checkers-Robot/blob/3d-models/Checkers%20Computer%20-%20Case/Case/Case%20Top.stl) Place it with the opening facing up (angle is 65° so supports are not necessairy to print the angled side)
+- [Bolt.stl](https://github.com/Sabshine/Python-Checkers-Robot/blob/3d-models/Checkers%20Computer%20-%20Case/Button%20Holders/Bolt.stl), hightly recommended
+- [Case Top.stl](https://github.com/Sabshine/Python-Checkers-Robot/blob/3d-models/Checkers%20Computer%20-%20Case/Case/Case%20Top.stl), place it with the opening facing up (angle is 65° so supports are not necessairy to print the angled side)
 
 #### Adhesion (Optional if your printer has problems with buildplate adhesion)
 Buildplate Adhesion: Brim
