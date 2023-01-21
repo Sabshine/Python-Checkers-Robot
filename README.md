@@ -10,7 +10,9 @@ Infill: 10% - 20%
 Infill pattern: Grid
 
 #### Supports
+--
 Supports: Optional
+--
 Structure: Normal
 Placement: Everywhere
 Support: 80.0°
