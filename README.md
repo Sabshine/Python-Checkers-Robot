@@ -7,7 +7,7 @@ This branch contains the 3D models (STL) to replicate this project.
 Resolution: 0.2 (0.4mm nozzle)\
 Line Width: 0.4 (Default)\
 Infill: 10% - 20%\
-Infill pattern: Grid\
+Infill pattern: Grid
 
 #### Supports
 
