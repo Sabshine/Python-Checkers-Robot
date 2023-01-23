@@ -187,4 +187,4 @@ def espeak_move(old, new, name):
     new_row_board = row_list[new[0]]
     new_col_board = col_list[new[1]]
 
-    os.system('espeak -a 30 "{} has moved a piece from the position {} to {}"'.format(name, old_row_board + old_col_board, new_row_board + new_col_board))
+    os.system('espeak -a 30 "{} has moved a piece from the position {} to {}"'.format(name, old_row_board + " " + old_col_board, new_row_board + " " + new_col_board))
