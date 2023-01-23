@@ -233,8 +233,10 @@ def main():
                 print(selection_result)
                 if selection_result:
                     os.system('espeak -a 30 "Invalid move"')
-
+                    
+                    print(old_white_pieces)
                     old_white_pieces = copy.deepcopy(backup_old_white_pieces)
+                    print(backup_old_white_pieces)
 
                     # invalid_move = True
             move = False
