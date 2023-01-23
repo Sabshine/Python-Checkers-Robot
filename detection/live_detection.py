@@ -165,7 +165,7 @@ def calculate_new_position(old_white_pieces, white_pieces, block_distance):
             new_row_col.append(old_row_col[1]-abs(step_y))
 
         # Speaker
-        espeak_move(old_row_col, new_row_col)
+        espeak_move(old_row_col, new_row_col, "Player")
         
         # See coords of pieces
         print("A piece has moved from the position: {} to a new position of: {}".format(old_white_pieces[detect_movement(old_white_pieces, white_pieces, False)]["cv"], white_pieces[detect_movement(white_pieces, old_white_pieces, False)]["cv"]))
@@ -177,7 +177,7 @@ def calculate_new_position(old_white_pieces, white_pieces, block_distance):
     
     return None, None
 
-def espeak_move(old, new):
+def espeak_move(old, new, name):
     row_list = ["8","7","6","5","4","3","2","1"]
     col_list = ["a","b","c","d","e","f","g","h"]
 
@@ -187,4 +187,4 @@ def espeak_move(old, new):
     new_row_board = row_list[new[0]]
     new_col_board = col_list[new[1]]
 
-    os.system('espeak -a 30 "Players has moved a piece from the position {} to {}"'.format(old_row_board + old_col_board, new_row_board + new_col_board))
+    os.system('espeak -a 30 "{} has moved a piece from the position {} to {}"'.format(name, old_row_board + old_col_board, new_row_board + new_col_board))

@@ -93,7 +93,7 @@ class Game:
         self.board = board
         self.change_turn()
 
-        espeak_move(old, new)
+        espeak_move(old, new, "Computer")
 
         if self.swift_ready == True:
             print("Arm moving piece on " + str(old) + " to " + str(new))
