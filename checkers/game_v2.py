@@ -93,11 +93,11 @@ class Game:
         self.board = board
         self.change_turn()
 
-        espeak_move(old, new, "Computer")
-
         if self.swift_ready == True:
             print("Arm moving piece on " + str(old) + " to " + str(new))
             self.move_arm([old[0], old[1]], [new[0], new[1]])
+        
+        espeak_move(old, new, "Computer")
 
     def move_arm(self, old_pos, new_pos):
         old_x_pos, old_y_pos = self.calculate_coordinates(old_pos)
