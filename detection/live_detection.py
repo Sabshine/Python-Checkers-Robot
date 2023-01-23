@@ -1,3 +1,4 @@
+import os
 import cv2 as cv
 import itertools   
 import math
@@ -135,7 +136,7 @@ def normal_round(n):
     return math.ceil(n)
 
 
-def calculate_new_position(old_white_pieces, white_pieces, block_distance, muted):
+def calculate_new_position(old_white_pieces, white_pieces, block_distance):
     old_move = detect_movement(old_white_pieces, white_pieces, True)
     new_move = detect_movement(white_pieces, old_white_pieces, False)
     print(old_move, new_move)
@@ -163,12 +164,27 @@ def calculate_new_position(old_white_pieces, white_pieces, block_distance, muted
         else:
             new_row_col.append(old_row_col[1]-abs(step_y))
 
-        if muted:
-            print("A piece has moved from  the position: {} to a new position of: {}".format(old_white_pieces[detect_movement(old_white_pieces, white_pieces, False)]["cv"], white_pieces[detect_movement(white_pieces, old_white_pieces, False)]["cv"]))
-            print("Old row,col : " + str(old_row_col))
-            print("New row,col : " + str(new_row_col))
+        # Speaker
+        espeak_move(old_row_col, new_row_col)
+        
+        # See coords of pieces
+        print("A piece has moved from the position: {} to a new position of: {}".format(old_white_pieces[detect_movement(old_white_pieces, white_pieces, False)]["cv"], white_pieces[detect_movement(white_pieces, old_white_pieces, False)]["cv"]))
+        print("Old row,col : " + str(old_row_col))
+        print("New row,col : " + str(new_row_col))
 
         # Add new row,col to current "white_pieces"
         return old_row_col, new_row_col
     
     return None, None
+
+def espeak_move(old, new):
+    row_list = ["8","7","6","5","4","3","2","1"]
+    col_list = ["a","b","c","d","e","f","g","h"]
+
+    old_row_board = row_list[old[0]]
+    old_col_board = col_list[old[1]]
+
+    new_row_board = row_list[new[0]]
+    new_col_board = col_list[new[1]]
+
+    os.system('espeak -a 30 "Players has moved a piece from the position {} to {}"'.format(old_row_board + old_col_board, new_row_board + new_col_board))

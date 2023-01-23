@@ -1,15 +1,15 @@
 import pygame
 from .constants import RED, WHITE, BLUE, SQUARE_SIZE
 from checkers.board import Board
+from detection.live_detection import espeak_move
 
 import time
 from uarm.wrapper import SwiftAPI
 
 class Game:
-    def __init__(self, win, muted):
+    def __init__(self, win):
         self._init()
         self.win = win
-        self.muted = muted
 
         self.board_piece_height = 23
         self.zero_posistion = [105, -95] # [106.53, -94.2, 23.53]
@@ -49,9 +49,6 @@ class Game:
             if not result:
                 self.selected = None
                 self.select(curRow, curCol, newRow, newCol)
-            #     return False
-            # else:
-            #     return True
         
         piece = self.board.get_piece(curRow, curCol)
         if piece != 0 and piece.color == self.turn:
@@ -95,6 +92,8 @@ class Game:
     def ai_move(self, board, old, new):
         self.board = board
         self.change_turn()
+
+        espeak_move(old, new)
 
         if self.swift_ready == True:
             print("Arm moving piece on " + str(old) + " to " + str(new))

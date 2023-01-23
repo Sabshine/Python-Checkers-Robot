@@ -1,4 +1,5 @@
 # Assets: https://techwithtim.net/wp-content/uploads/2020/09/assets.zip
+import os
 import pygame
 import cv2 as cv
 import copy
@@ -19,7 +20,6 @@ FPS = 60
 first_check = True
 move = False
 invalid_move = False
-muted = False
 
 # CHECKER PIECES VARIABLES
 backup_old_white_pieces = [] # [{'cv':[x,y], 'ai':[row,col]}, {...}]
@@ -30,7 +30,6 @@ block_distance = 0 # calculated with 5x - 7x: Outcome (if positive) is block FOR
 # HARDWARE
 button_move = gpiozero.Button(17)
 button_reset = gpiozero.Button(27)
-button_mute = gpiozero.Button(22)
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Checkers')
@@ -138,7 +137,6 @@ def start_capture(cap, game):
             global old_row_col
             global new_row_col
             global move
-            global muted
             
             backup_old_white_pieces = copy.deepcopy(old_white_pieces)
             old_white_pieces = copy.deepcopy(white_pieces)
@@ -146,7 +144,7 @@ def start_capture(cap, game):
             current_white_pieces, distance_none = detect_white_pieces_on_board(frame, first_check) # detect white pieces and then assign x,y and row,col
             white_pieces = copy.deepcopy(current_white_pieces)
 
-            result_old_row_col, result_new_row_col = calculate_new_position(old_white_pieces, white_pieces, block_distance, muted) # detect movement, calculate new position
+            result_old_row_col, result_new_row_col = calculate_new_position(old_white_pieces, white_pieces, block_distance) # detect movement, calculate new position
             if result_old_row_col != None and result_new_row_col != None:
                 old_row_col = result_old_row_col
                 new_row_col = result_new_row_col
@@ -163,6 +161,7 @@ def start_capture(cap, game):
                 move = True
             else:
                 old_white_pieces = copy.deepcopy(backup_old_white_pieces)
+                os.system('espeak -a 30 "No move detected, please try again"')
                 print("No move detected")
 
 def reset_variables():
@@ -182,10 +181,9 @@ def reset_variables():
     block_distance = 0
 
 def main():
-    global muted
     run = True
     clock = pygame.time.Clock()
-    game = Game(WIN, muted)
+    game = Game(WIN)
 
     cap = cv.VideoCapture(0);
     global move
@@ -211,6 +209,10 @@ def main():
             game.ai_move(new_board, old, new)
 
         if game.winner() != None:
+            if game.winner() is (255, 255, 255):
+                os.system('espeak -a 30 "Computer wins!"')
+            else:
+                os.system('espeak -a 30 "Player wins!"')
             print(game.winner())
             run = False
 
@@ -227,7 +229,7 @@ def main():
                 print("Selection Result:")
                 print(selection_result)
                 if selection_result:
-                    print("invalid move")
+                    os.system('espeak -a 30 "Invalid move"')
                     invalid_move = True
             move = False
         
@@ -235,10 +237,6 @@ def main():
             print("reset")
             game.reset()
             reset_variables()
-
-        if button_mute.is_pressed:
-            print("mute")
-            muted = not muted
             
         game.update()
     
