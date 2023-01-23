@@ -112,6 +112,7 @@ def start_capture(cap, game):
     if invalid_move:
         print("in if invalid move")
         old_white_pieces = copy.deepcopy(backup_old_white_pieces)
+        white_pieces = []
         invalid_move = False
 
     if cv.waitKey(1) & 0xFF == ord("s"):
