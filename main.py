@@ -109,11 +109,10 @@ def start_capture(cap, game):
 
     ret, frame = cap.read()
 
-    if invalid_move:
-        print("in if invalid move")
-        old_white_pieces = copy.deepcopy(backup_old_white_pieces)
-        white_pieces = []
-        invalid_move = False
+    # if invalid_move:
+    #     print("in if invalid move")
+    #     old_white_pieces = copy.deepcopy(backup_old_white_pieces)
+    #     invalid_move = False
 
     if cv.waitKey(1) & 0xFF == ord("s"):
     # if cv.waitKey(1) & button_move.is_pressed:
@@ -190,6 +189,8 @@ def main():
     cap = cv.VideoCapture(0);
     global move
     global invalid_move
+    global backup_old_white_pieces
+    global old_white_pieces
 
     while run:
         start_capture(cap, game)
@@ -232,7 +233,10 @@ def main():
                 print(selection_result)
                 if selection_result:
                     os.system('espeak -a 30 "Invalid move"')
-                    invalid_move = True
+
+                    old_white_pieces = copy.deepcopy(backup_old_white_pieces)
+
+                    # invalid_move = True
             move = False
         
         if button_reset.is_pressed:
