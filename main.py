@@ -114,7 +114,8 @@ def start_capture(cap, game):
         old_white_pieces = copy.deepcopy(backup_old_white_pieces)
         invalid_move = False
 
-    if cv.waitKey(1) & button_move.is_pressed:
+    if cv.waitKey(1) & 0xFF == ord("s"):
+    # if cv.waitKey(1) & button_move.is_pressed:
         print("Current pieces and pieces of player:")
         print(len(white_pieces))
         print(game.get_player())
@@ -209,7 +210,7 @@ def main():
             game.ai_move(new_board, old, new)
 
         if game.winner() != None:
-            if game.winner() is (255, 255, 255):
+            if game.winner() == (255, 255, 255):
                 os.system('espeak -a 30 "Computer wins!"')
             else:
                 os.system('espeak -a 30 "Player wins!"')
