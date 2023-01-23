@@ -154,12 +154,12 @@ def calculate_new_position(old_white_pieces, white_pieces, block_distance):
         new_row_col = []
 
         # Calculate new row,col
-        if step_x < 0:
+        if step_x > 0:
             new_row_col.append(old_row_col[0]-abs(step_x))
         else:
             new_row_col.append(old_row_col[0]+abs(step_x))
 
-        if step_y < 0:
+        if step_y > 0:
             new_row_col.append(old_row_col[1]+abs(step_y))
         else:
             new_row_col.append(old_row_col[1]-abs(step_y))
