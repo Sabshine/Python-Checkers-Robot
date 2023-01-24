@@ -30,6 +30,8 @@ block_distance = 0 # calculated with 5x - 7x: Outcome (if positive) is block FOR
 # HARDWARE
 button_move = gpiozero.Button(17)
 button_reset = gpiozero.Button(27)
+led_player = gpiozero.LED(23)
+led_computer = gpiozero.LED(24)
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Checkers')
@@ -114,8 +116,8 @@ def start_capture(cap, game):
         old_white_pieces = copy.deepcopy(backup_old_white_pieces)
         invalid_move = False
 
-    if cv.waitKey(1) & 0xFF == ord("s"):
-    # if cv.waitKey(1) & button_move.is_pressed:
+    # if cv.waitKey(1) & 0xFF == ord("s"):
+    if cv.waitKey(1) & button_move.is_pressed:
         print("Current pieces and pieces of player:")
         print(len(white_pieces))
         print(game.get_player())
@@ -199,6 +201,8 @@ def main():
         clock.tick(FPS)
         
         if game.turn == WHITE:
+            led_player.on()
+            led_computer.off()
             board_old = game.get_board().__dict__['board']
             value, new_board = minimax(game.get_board(), 4, WHITE, game)
             board_new = new_board.__dict__['board']
@@ -210,6 +214,9 @@ def main():
                 delete_skipped_pieces(skipped)          
             
             game.ai_move(new_board, old, new)
+        else:
+            led_player.off()
+            led_computer.on()
 
         if game.winner() != None:
             if game.winner() == (255, 255, 255):
