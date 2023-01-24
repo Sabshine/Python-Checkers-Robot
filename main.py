@@ -109,10 +109,10 @@ def start_capture(cap, game):
 
     ret, frame = cap.read()
 
-    # if invalid_move:
-    #     print("in if invalid move")
-    #     old_white_pieces = copy.deepcopy(backup_old_white_pieces)
-    #     invalid_move = False
+    if invalid_move:
+        print("in if invalid move")
+        old_white_pieces = copy.deepcopy(backup_old_white_pieces)
+        invalid_move = False
 
     if cv.waitKey(1) & 0xFF == ord("s"):
     # if cv.waitKey(1) & button_move.is_pressed:
@@ -189,8 +189,8 @@ def main():
     cap = cv.VideoCapture(0);
     global move
     global invalid_move
-    global backup_old_white_pieces
-    global old_white_pieces
+    # global backup_old_white_pieces
+    # global old_white_pieces
 
     while run:
         start_capture(cap, game)
@@ -204,7 +204,7 @@ def main():
             board_new = new_board.__dict__['board']
             
             old, new, skipped = get_ai_move(board_old, board_new)
-            print(skipped)
+            # print(skipped)
             if len(skipped) != 0:
                 game.take_skipped_pieces(skipped)  
                 delete_skipped_pieces(skipped)          
@@ -225,21 +225,19 @@ def main():
         
         if move == True:
             result = game.select(old_row_col[0], old_row_col[1], new_row_col[0], new_row_col[1])
-            print("Result:")
-            print(result)
+            print("Result: " + str(result))
             if result:
                 selection_result = game.select(old_row_col[0], old_row_col[1], new_row_col[0], new_row_col[1])
-                print("Selection Result:")
-                print(selection_result)
+                print("Selection Result: " + str(selection_result))
                 if selection_result:
                     os.system('espeak -a 30 "Invalid move"')
 
-                    print(old_white_pieces)
-                    old_white_pieces = copy.deepcopy(backup_old_white_pieces)
-                    print(old_white_pieces)
-                    print(backup_old_white_pieces)
+                    # print(old_white_pieces)
+                    # old_white_pieces = copy.deepcopy(backup_old_white_pieces)
+                    # print(old_white_pieces)
+                    # print(backup_old_white_pieces)
 
-                    # invalid_move = True
+                    invalid_move = True
             move = False
         
         if button_reset.is_pressed:

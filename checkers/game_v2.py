@@ -44,7 +44,15 @@ class Game:
         self._init()
 
     def select(self, curRow, curCol, newRow, newCol):
+        # If selected piece isn't equal to incoming data row and col, selection is wrong and skip if self.selected
+        if self.selected is not None:
+            if not (self.selected.__dict__['row'] == curRow and self.selected.__dict__['col'] == curCol):
+                print("if if")
+                self.selected = None
+
         if self.selected:
+            print("in select: " + str(self.selected)) 
+            print(self.selected.__dict__)
             result = self._move(newRow, newCol)
             if not result:
                 self.selected = None
