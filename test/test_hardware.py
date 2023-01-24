@@ -1,7 +1,7 @@
 import gpiozero
 
 # HARDWARE
-button_move = gpiozero.Button(18)
+button_move = gpiozero.Button(17)
 button_reset = gpiozero.Button(22)
 
 led_player = gpiozero.LED(23)
