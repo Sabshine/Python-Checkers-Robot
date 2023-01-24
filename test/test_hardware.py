@@ -8,13 +8,14 @@ led_player = gpiozero.LED(23)
 led_computer = gpiozero.LED(24)
 
 def main():
+  led_player.blink()
+  led_computer.blink()
+
   while True:
     if button_move.is_pressed:
-      led_player.on()
       print("move")
 
     if button_reset.is_pressed:
-      led_computer.on()
       print("reset")
 
 main()
