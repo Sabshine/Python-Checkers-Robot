@@ -12,7 +12,6 @@ def main():
   led_computer.blink()
 
   while True:
-    print("Hoi")
     if not button_move.is_pressed:
       print("move")
 
