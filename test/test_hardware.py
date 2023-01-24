@@ -13,10 +13,10 @@ def main():
 
   while True:
     print("Hoi")
-    if button_move.is_pressed:
+    if not button_move.is_pressed:
       print("move")
 
-    if button_reset.is_pressed:
+    if not button_reset.is_pressed:
       print("reset")
 
 main()
