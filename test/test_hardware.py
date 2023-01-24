@@ -9,7 +9,7 @@ led_computer = gpiozero.LED(24)
 
 def main():
   while True:
-    if not button_move.is_pressed:
+    if button_move.is_pressed:
       print("move")
 
     # if button_reset.is_pressed:
