@@ -12,10 +12,10 @@ def main():
   led_computer.blink()
 
   while True:
-    if not button_move.is_pressed:
+    if button_move.when_pressed:
       print("move")
 
-    if not button_reset.is_pressed:
+    if button_reset.when_pressed:
       print("reset")
 
 main()
