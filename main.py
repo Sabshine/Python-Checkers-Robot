@@ -30,10 +30,10 @@ white_pieces = [] # [{'cv':[x,y], 'ai':[row,col]}, {...}]
 block_distance = 0 # calculated with 5x - 7x: Outcome (if positive) is block FORWARD (to the right when looking at stream)
 
 # HARDWARE
-button_move = gpiozero.Button(22)
-button_reset = gpiozero.Button(17)
-led_player = gpiozero.LED(23)
-led_computer = gpiozero.LED(24)
+button_move = gpiozero.Button(17)
+button_reset = gpiozero.Button(22)
+led_player = gpiozero.LED(24)
+led_computer = gpiozero.LED(23)
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Checkers')
@@ -137,7 +137,7 @@ def start_capture(cap, game):
 
     # Do move
     # if cv.waitKey(1) & 0xFF == ord("s"):
-    if cv.waitKey(1) & button_move.is_pressed:
+    if cv.waitKey(1) and not button_move.is_pressed:
         print("Current pieces and pieces of player:")
         print(len(white_pieces))
         print(game.get_player())
@@ -262,7 +262,7 @@ def main():
                 move = False
             
             # Reset everything
-            if button_reset.is_pressed:
+            if not button_reset.is_pressed:
                 print("reset")
                 game.reset()
                 reset_variables()
