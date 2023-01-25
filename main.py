@@ -213,14 +213,14 @@ def main():
             if com.in_waiting and "dif" in com.readline().decode("utf-8"):
                 difficulty = int(com.readline().decode("utf-8").strip("dif: "))
                 print(difficulty)
-        else:
-            if difficulty != None and printed == False:
-                print("Sending stop to Arduino")
-                msg = "stop".encode('utf-8')
-                time.sleep(1)
-                com.write(msg)
-                com.flush()
-                printed = True
+        # else:
+        #     if difficulty != None and printed == False:
+        #         print("Sending stop to Arduino")
+        #         msg = "stop".encode('utf-8')
+        #         time.sleep(1)
+        #         com.write(msg)
+        #         com.flush()
+        #         printed = True
 
             start_capture(cap, game)
 
