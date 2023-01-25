@@ -214,6 +214,7 @@ def main():
                 print("Sending stop to Arduino")
                 msg = "stop".encode('utf-8')
                 com.write(msg)
+                com.flush()
                 printed = True
 
             start_capture(cap, game)
@@ -268,7 +269,8 @@ def main():
                 print("Sending reset to Arduino")
                 msg = "reset".encode('utf-8')
                 com.write(msg)
-
+                com.flush()
+                
                 game.reset()
                 reset_variables()
                 
