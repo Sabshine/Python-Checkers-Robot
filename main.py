@@ -209,6 +209,7 @@ def main():
                 print(difficulty)
         else:
             if difficulty != None and printed == False:
+                print("Sending stop to Arduino")
                 msg = "stop".encode('utf-8')
                 com.write(msg)
                 printed = True
