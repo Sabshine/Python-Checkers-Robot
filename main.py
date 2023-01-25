@@ -181,6 +181,7 @@ def reset_variables():
     global old_white_pieces
     global white_pieces
     global block_distance
+    global difficulty
     first_check = True
     move = False
     invalid_move = False
@@ -188,6 +189,7 @@ def reset_variables():
     old_white_pieces = []
     white_pieces = []
     block_distance = 0
+    difficulty = None
 
 def main():
     com = serial.Serial("/dev/ttyUSB0", 9600)
