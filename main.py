@@ -264,7 +264,7 @@ def main():
                 move = False
             
             # Reset everything (also Arduino screen)
-            if button_reset.is_pressed:
+            if not button_reset.is_pressed:
                 print("Sending reset to Arduino")
                 msg = "reset".encode('utf-8')
                 com.write(msg)
