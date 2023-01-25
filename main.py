@@ -203,9 +203,10 @@ def main():
 
     while run:
         if difficulty == None:
-            if com.in_waiting and "dif" in com.readline().decode("utf-8"):
-                difficulty = int(com.readline().decode("utf-8").strip("dif: "))
-                print(difficulty)
+            print(com.readline().decode("utf-8"))
+            # if com.in_waiting and "dif" in com.readline().decode("utf-8"):
+            #     difficulty = int(com.readline().decode("utf-8").strip("dif: "))
+            #     print(difficulty)
         else:
             if difficulty != None and printed == False:
                 msg = "stop".encode('utf-8')
