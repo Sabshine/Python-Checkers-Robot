@@ -137,7 +137,7 @@ def start_capture(cap, game):
 
     # Do move
     # if cv.waitKey(1) & 0xFF == ord("s"):
-    if cv.waitKey(1) and not button_move.is_pressed:
+    if cv.waitKey(1) and button_move.is_pressed:
         print("Current pieces and pieces of player:")
         print(len(white_pieces))
         print(game.get_player())
