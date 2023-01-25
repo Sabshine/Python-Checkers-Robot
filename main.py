@@ -263,7 +263,10 @@ def main():
             
             # Reset everything
             if button_reset.is_pressed:
-                print("reset")
+                print("Sending reset to Arduino")
+                msg = "reset".encode('utf-8')
+                com.write(msg)
+
                 game.reset()
                 reset_variables()
                 
