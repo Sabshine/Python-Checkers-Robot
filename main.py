@@ -267,18 +267,18 @@ def main():
                 move = False
             
             # Reset everything (also Arduino screen)
-            if button_reset.is_pressed:
-                led_computer.off()
-                led_player.off()
+            # if button_reset.is_pressed:
+            #     led_computer.off()
+            #     led_player.off()
 
-                print("Sending reset to Arduino")
-                msg = "reset".encode('utf-8')
-                time.sleep(1)
-                com.write(msg)
-                com.flush()
+            #     print("Sending reset to Arduino")
+            #     msg = "reset".encode('utf-8')
+            #     time.sleep(1)
+            #     com.write(msg)
+            #     com.flush()
 
-                game.reset()
-                reset_variables()
+            #     game.reset()
+            #     reset_variables()
                 
             game.update()
     
