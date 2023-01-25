@@ -155,27 +155,14 @@ def calculate_new_position(old_white_pieces, white_pieces, block_distance):
 
         # Calculate new row,col
         if step_x > 0:
-            print("Using >")
-            if step_x > 0:
-                new_row_col.append(old_row_col[0]-abs(step_x))
-            else:
-                new_row_col.append(old_row_col[0]+abs(step_x))
-
-            if step_y > 0:
-                new_row_col.append(old_row_col[1]+abs(step_y))
-            else:
-                new_row_col.append(old_row_col[1]-abs(step_y))
+            new_row_col.append(old_row_col[0]-abs(step_x))
         else:
-            print("Using <")
-            if step_x < 0:
-                new_row_col.append(old_row_col[0]-abs(step_x))
-            else:
-                new_row_col.append(old_row_col[0]+abs(step_x))
+            new_row_col.append(old_row_col[0]+abs(step_x))
 
-            if step_y < 0:
-                new_row_col.append(old_row_col[1]+abs(step_y))
-            else:
-                new_row_col.append(old_row_col[1]-abs(step_y))
+        if step_y > 0:
+            new_row_col.append(old_row_col[1]+abs(step_y))
+        else:
+            new_row_col.append(old_row_col[1]-abs(step_y))
 
         # Speaker
         espeak_move(old_row_col, new_row_col, "Player")
