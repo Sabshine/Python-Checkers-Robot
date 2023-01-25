@@ -3,9 +3,7 @@
 ## General information
 
 This branch contains the code for the Arduino and its hardware. The hardware that is connected to the Arduino are as followed:
-- 1.3" OLED display - SH1106 (I2C, 128*64 pixels, White)
-<br>
-This specific screen uses the following initialization (this is different for your OLED):
+- 1.3" OLED display - SH1106 (I2C, 128*64 pixels, White), this specific screen uses the following initialization (this is different for your OLED):
 
 ```bash
 U8G2_SH1106_128X64_NONAME_1_HW_I2C display(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
