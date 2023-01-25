@@ -267,7 +267,7 @@ def main():
                 move = False
             
             # Reset everything (also Arduino screen)
-            if not button_reset.is_pressed:
+            if button_reset.is_pressed:
                 led_computer.off()
                 led_player.off()
 
