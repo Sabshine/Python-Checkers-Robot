@@ -213,7 +213,7 @@ def main():
             if difficulty != None and printed == False:
                 print("Sending stop to Arduino")
                 msg = "stop".encode('utf-8')
-                com.write(msg)
+                com.writelines(msg)
                 printed = True
 
             start_capture(cap, game)
@@ -267,7 +267,7 @@ def main():
             if not button_reset.is_pressed:
                 print("Sending reset to Arduino")
                 msg = "reset".encode('utf-8')
-                com.write(msg)
+                com.writelines(msg)
 
                 game.reset()
                 reset_variables()
