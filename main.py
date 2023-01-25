@@ -205,6 +205,8 @@ def main():
     printed = False
 
     while run:
+        detect_pieces_live(cap) # Check detection / camera position
+
         if difficulty == None:
             # print(com.readline().decode("utf-8"))
             if com.in_waiting and "dif" in com.readline().decode("utf-8"):
@@ -220,7 +222,6 @@ def main():
                 printed = True
 
             start_capture(cap, game)
-            detect_pieces_live(cap) # Check detection / camera position
 
             clock.tick(FPS)
             
