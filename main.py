@@ -190,7 +190,7 @@ def reset_variables():
     block_distance = 0
 
 def main():
-    com = serial.Serial("", 9600)
+    com = serial.Serial("/dev/ttyUSB0", 9600)
     run = True
     clock = pygame.time.Clock()
     game = Game(WIN)
