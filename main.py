@@ -23,6 +23,7 @@ difficulty = None
 first_check = True
 move = False
 invalid_move = False
+data_to_arduino = "12;0;12;0\n"
 
 # CHECKER PIECES VARIABLES
 backup_old_white_pieces = [] # [{'cv':[x,y], 'ai':[row,col]}, {...}]
@@ -203,6 +204,7 @@ def main():
     global move
     global invalid_move
     global difficulty
+    global data_to_arduino
     printed = False
 
     while run:
@@ -240,9 +242,13 @@ def main():
                     delete_skipped_pieces(skipped)          
                 
                 game.ai_move(new_board, old, new)
+
+                data_to_arduino = game.print_arduino()
             else:
                 led_player.off()
                 led_computer.on()
+
+                data_to_arduino = game.print_arduino()
 
             if game.winner() != None:
                 if game.winner() == (255, 255, 255):
@@ -274,7 +280,7 @@ def main():
                 led_player.off()
 
                 print("Sending reset to Arduino")
-                msg = "reset".encode('utf-8')
+                msg = "reset\n".encode('utf-8')
                 time.sleep(1)
                 com.write(msg)
                 com.flush()

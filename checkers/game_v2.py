@@ -91,6 +91,9 @@ class Game:
         else:
             self.turn = RED
 
+    def print_arduino(self):
+        return self.board.get_pieces_arduino()
+
     def get_player(self):
         return self.board.get_player_pieces()
     
