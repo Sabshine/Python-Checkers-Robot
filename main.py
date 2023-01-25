@@ -1,5 +1,6 @@
 # Assets: https://techwithtim.net/wp-content/uploads/2020/09/assets.zip
 import os
+import time
 import pygame
 import cv2 as cv
 import copy
@@ -213,7 +214,9 @@ def main():
             if difficulty != None and printed == False:
                 print("Sending stop to Arduino")
                 msg = "stop".encode('utf-8')
-                com.writelines(msg)
+                time.sleep(1)
+                com.write(msg)
+                com.flush()
                 printed = True
 
             start_capture(cap, game)
@@ -267,7 +270,9 @@ def main():
             if not button_reset.is_pressed:
                 print("Sending reset to Arduino")
                 msg = "reset".encode('utf-8')
-                com.writelines(msg)
+                time.sleep(1)
+                com.write(msg)
+                com.flush()
 
                 game.reset()
                 reset_variables()
