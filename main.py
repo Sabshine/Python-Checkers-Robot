@@ -262,7 +262,7 @@ def main():
                 move = False
             
             # Reset everything
-            if not button_reset.is_pressed:
+            if button_reset.is_pressed:
                 print("reset")
                 game.reset()
                 reset_variables()
