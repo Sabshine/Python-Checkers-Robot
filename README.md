@@ -1,9 +1,6 @@
 # Python-Checkers-AI
-<br>
 
 ## General information
----
-<br>
 
 This branch contains the code for the Arduino and its hardware. The hardware that is connected to the Arduino are as followed:
 - 1.3" OLED display - SH1106 (I2C, 128*64 pixels, White)
@@ -21,11 +18,8 @@ The other options [Screen - Playing Page](https://github.com/Sabshine/Python-Che
 If you want to replicate the complete project, you have to download the 3D-model for the complete case. This files can be found in the folder:
 [Checkers Computer - Case](https://github.com/Sabshine/Python-Checkers-Robot/tree/3d-models/Checkers%20Computer%20-%20Case).
 
-<br>
 
 ## Libraries
----
-<br>
 
 The libraries needed for the Arduino code to work are as followed:
 - [Arduino Multi Button - Poelstra](https://github.com/poelstra/arduino-multi-button), used for easy button usage
