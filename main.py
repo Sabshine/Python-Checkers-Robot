@@ -211,6 +211,7 @@ def main():
             if difficulty != None and printed == False:
                 msg = "stop".encode('utf-8')
                 com.write(msg)
+                printed = True
 
             start_capture(cap, game)
             detect_pieces_live(cap) # Check detection / camera position
