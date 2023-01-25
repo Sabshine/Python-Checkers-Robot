@@ -30,8 +30,8 @@ white_pieces = [] # [{'cv':[x,y], 'ai':[row,col]}, {...}]
 block_distance = 0 # calculated with 5x - 7x: Outcome (if positive) is block FORWARD (to the right when looking at stream)
 
 # HARDWARE
-button_move = gpiozero.Button(17)
-button_reset = gpiozero.Button(22)
+button_reset = gpiozero.Button(17)
+button_move = gpiozero.Button(22)
 led_player = gpiozero.LED(24)
 led_computer = gpiozero.LED(23)
 
