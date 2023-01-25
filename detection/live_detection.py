@@ -110,7 +110,7 @@ def detect_movement(pieces_list1, pieces_list2, repopulate):
             x2 = j['cv'][0]
             y2 = j['cv'][1]
             
-            if x in range(x2-5, x2+5) and y in range(y2-5, y2+5):
+            if x in range(x2-10, x2+10) and y in range(y2-10, y2+10):
                 temp.append(1)
                 if repopulate:
                     j['ai'].append(x_ai)

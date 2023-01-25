@@ -155,6 +155,7 @@ def start_capture(cap, game):
             white_pieces = copy.deepcopy(current_white_pieces)
 
             result_old_row_col, result_new_row_col = calculate_new_position(old_white_pieces, white_pieces, block_distance) # detect movement, calculate new position
+            print(block_distance)
             if result_old_row_col != None and result_new_row_col != None:
                 old_row_col = result_old_row_col
                 new_row_col = result_new_row_col
