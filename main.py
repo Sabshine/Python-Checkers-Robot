@@ -4,6 +4,7 @@ import pygame
 import cv2 as cv
 import copy
 import gpiozero
+import serial
 
 import checkers
 from checkers.constants import WIDTH, HEIGHT, SQUARE_SIZE, RED, WHITE
@@ -17,6 +18,7 @@ from detection.live_detect_pieces import detect_pieces_live
 FPS = 60
 
 # BEGIN GAME
+difficulty = None
 first_check = True
 move = False
 invalid_move = False
@@ -28,8 +30,8 @@ white_pieces = [] # [{'cv':[x,y], 'ai':[row,col]}, {...}]
 block_distance = 0 # calculated with 5x - 7x: Outcome (if positive) is block FORWARD (to the right when looking at stream)
 
 # HARDWARE
-button_move = gpiozero.Button(27)
-button_reset = gpiozero.Button(17)
+button_move = gpiozero.Button(17)
+button_reset = gpiozero.Button(22)
 led_player = gpiozero.LED(23)
 led_computer = gpiozero.LED(24)
 
@@ -108,35 +110,39 @@ def start_capture(cap, game):
     global first_check
     global invalid_move
     global block_distance
+    global difficulty
 
     ret, frame = cap.read()
 
+    # Invalid move
     if invalid_move:
         print("in if invalid move")
         old_white_pieces = copy.deepcopy(backup_old_white_pieces)
         invalid_move = False
 
+    # First setup board
+    if len(white_pieces) != 12 and first_check and difficulty != None:
+        white_pieces = []
+        current_white_pieces, calculated_block_distance = detect_white_pieces_on_board(frame, first_check) # Pass 'frame' for live detection
+        white_pieces = copy.deepcopy(current_white_pieces)
+        block_distance = copy.deepcopy(calculated_block_distance)
+
+        print("===================OLD===================")
+        print(old_white_pieces)
+        print("===================NEW===================")
+        print(white_pieces)
+
+        if len(white_pieces) == 12:
+            first_check = False
+
+    # Do move
     # if cv.waitKey(1) & 0xFF == ord("s"):
     if cv.waitKey(1) & button_move.is_pressed:
         print("Current pieces and pieces of player:")
         print(len(white_pieces))
         print(game.get_player())
             
-        if len(white_pieces) != 12 and first_check:
-            white_pieces = []
-            current_white_pieces, calculated_block_distance = detect_white_pieces_on_board(frame, first_check) # Pass 'frame' for live detection
-            white_pieces = copy.deepcopy(current_white_pieces)
-            block_distance = copy.deepcopy(calculated_block_distance)
-
-            print("===================OLD===================")
-            print(old_white_pieces)
-            print("===================NEW===================")
-            print(white_pieces)
-
-            if len(white_pieces) == 12:
-                first_check = False
-
-        elif first_check == False and len(white_pieces) == game.get_player():
+        if first_check == False and len(white_pieces) == game.get_player():
             global old_row_col
             global new_row_col
             global move
@@ -184,6 +190,7 @@ def reset_variables():
     block_distance = 0
 
 def main():
+    com = serial.Serial("", 9600)
     run = True
     clock = pygame.time.Clock()
     game = Game(WIN)
@@ -191,68 +198,73 @@ def main():
     cap = cv.VideoCapture(0);
     global move
     global invalid_move
-    # global backup_old_white_pieces
-    # global old_white_pieces
+    global difficulty
+    printed = False
 
     while run:
-        start_capture(cap, game)
-        detect_pieces_live(cap) # Check detection / camera position
-
-        clock.tick(FPS)
-        
-        if game.turn == WHITE:
-            led_player.on()
-            led_computer.off()
-            board_old = game.get_board().__dict__['board']
-            value, new_board = minimax(game.get_board(), 4, WHITE, game)
-            board_new = new_board.__dict__['board']
-            
-            old, new, skipped = get_ai_move(board_old, board_new)
-            # print(skipped)
-            if len(skipped) != 0:
-                game.take_skipped_pieces(skipped)  
-                delete_skipped_pieces(skipped)          
-            
-            game.ai_move(new_board, old, new)
+        if difficulty == None:
+            if com.in_waiting and "dif" in com.readline().decode("utf-8"):
+                difficulty = int(com.readline().decode("utf-8").strip("dif: "))
+                print(difficulty)
         else:
-            led_player.off()
-            led_computer.on()
+            if difficulty != None and printed == False:
+                msg = "stop".encode('utf-8')
+                com.write(msg)
 
-        if game.winner() != None:
-            if game.winner() == (255, 255, 255):
-                os.system('espeak -a 30 "Computer wins!"')
-            else:
-                os.system('espeak -a 30 "Player wins!"')
-            print(game.winner())
-            run = False
+            start_capture(cap, game)
+            detect_pieces_live(cap) # Check detection / camera position
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
-        
-        if move == True:
-            result = game.select(old_row_col[0], old_row_col[1], new_row_col[0], new_row_col[1])
-            print("Result: " + str(result))
-            if result:
-                selection_result = game.select(old_row_col[0], old_row_col[1], new_row_col[0], new_row_col[1])
-                print("Selection Result: " + str(selection_result))
-                if selection_result:
-                    os.system('espeak -a 30 "Invalid move"')
-
-                    # print(old_white_pieces)
-                    # old_white_pieces = copy.deepcopy(backup_old_white_pieces)
-                    # print(old_white_pieces)
-                    # print(backup_old_white_pieces)
-
-                    invalid_move = True
-            move = False
-        
-        if button_reset.is_pressed:
-            print("reset")
-            game.reset()
-            reset_variables()
+            clock.tick(FPS)
             
-        game.update()
+            # If AI turn
+            if game.turn == WHITE:
+                led_player.on()
+                led_computer.off()
+                board_old = game.get_board().__dict__['board']
+                value, new_board = minimax(game.get_board(), difficulty, WHITE, game)
+                board_new = new_board.__dict__['board']
+                
+                old, new, skipped = get_ai_move(board_old, board_new)
+                if len(skipped) != 0:
+                    game.take_skipped_pieces(skipped)  
+                    delete_skipped_pieces(skipped)          
+                
+                game.ai_move(new_board, old, new)
+            else:
+                led_player.off()
+                led_computer.on()
+
+            if game.winner() != None:
+                if game.winner() == (255, 255, 255):
+                    os.system('espeak -a 30 "Computer wins!"')
+                else:
+                    os.system('espeak -a 30 "Player wins!"')
+                print(game.winner())
+                run = False
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
+            
+            if move == True:
+                result = game.select(old_row_col[0], old_row_col[1], new_row_col[0], new_row_col[1])
+                print("Result: " + str(result))
+                if result:
+                    selection_result = game.select(old_row_col[0], old_row_col[1], new_row_col[0], new_row_col[1])
+                    print("Selection Result: " + str(selection_result))
+                    if selection_result:
+                        os.system('espeak -a 30 "Invalid move"')
+
+                        invalid_move = True
+                move = False
+            
+            # Reset everything
+            if button_reset.is_pressed:
+                print("reset")
+                game.reset()
+                reset_variables()
+                
+            game.update()
     
     pygame.quit()
     cap.release()
