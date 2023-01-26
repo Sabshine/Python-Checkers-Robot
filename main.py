@@ -194,11 +194,11 @@ def reset_variables():
     block_distance = 0
     difficulty = None
 
-def send_to_arduino(com, data):
-    msg = data.encode('utf-8')
-    time.sleep(1)
-    com.write(msg)
-    com.flush()
+# def send_to_arduino(com, data):
+#     msg = data.encode('utf-8')
+#     time.sleep(1)
+#     com.write(msg)
+#     com.flush()
 
 def main():
     com = serial.Serial("/dev/ttyUSB0", 9600)
@@ -236,8 +236,8 @@ def main():
             
             # If AI turn
             if game.turn == WHITE:
-                data_to_arduino = game.print_arduino()
-                print(data_to_arduino)
+                # data_to_arduino = game.print_arduino()
+                # print(data_to_arduino)
                 # send_to_arduino(com, data_to_arduino)
 
                 led_player.on()
@@ -253,8 +253,8 @@ def main():
                 
                 game.ai_move(new_board, old, new)
             else:
-                data_to_arduino = game.print_arduino()
-                print(data_to_arduino)
+                # data_to_arduino = game.print_arduino()
+                # print(data_to_arduino)
                 # send_to_arduino(com, data_to_arduino)
 
                 led_player.off()
@@ -290,7 +290,7 @@ def main():
                 led_computer.off()
                 led_player.off()
 
-                print("Sending reset to Arduino")
+                # print("Sending reset to Arduino")
                 # send_to_arduino(com, "reset\n")
 
                 game.reset()
