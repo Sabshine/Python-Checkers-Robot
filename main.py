@@ -236,6 +236,9 @@ def main():
             
             # If AI turn
             if game.turn == WHITE:
+                data_to_arduino = game.print_arduino()
+                send_to_arduino(com, data_to_arduino)
+
                 led_player.on()
                 led_computer.off()
                 board_old = game.get_board().__dict__['board']
@@ -248,15 +251,13 @@ def main():
                     delete_skipped_pieces(skipped)          
                 
                 game.ai_move(new_board, old, new)
-
+            else:
                 data_to_arduino = game.print_arduino()
                 send_to_arduino(com, data_to_arduino)
-            else:
+
                 led_player.off()
                 led_computer.on()
 
-                data_to_arduino = game.print_arduino()
-                send_to_arduino(com, data_to_arduino)
 
             if game.winner() != None:
                 if game.winner() == (255, 255, 255):
