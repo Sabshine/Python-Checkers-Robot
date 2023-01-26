@@ -32,10 +32,10 @@ bool dial = false;
 bool print = false;
 bool reading = false;
 
-String pieces_player = "P 12";
-String kings_player = "K 0";
-String pieces_computer = "P 12";
-String kings_computer = "K 0";
+String pieces_player = "P";
+String kings_player = "K";
+String pieces_computer = "P";
+String kings_computer = "K";
 String msg = "";
 
 String text = "";
@@ -167,8 +167,6 @@ void loop() {
 
         reading = true;
       }
-
-      currentPage++;
     }
 
     else if(currentPage == 2 && optionSelection == 0){
@@ -202,6 +200,10 @@ void loop() {
 
     if (msg == "reset"){
       reset();
+    }
+    
+    if (msg == "stop"){
+      currentPage++;
     } else {
       pieces_player = getValue(msg, ';', 0);
       kings_player = getValue(msg, ';', 1);
