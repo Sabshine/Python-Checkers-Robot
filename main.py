@@ -23,6 +23,7 @@ difficulty = None
 first_check = True
 move = False
 invalid_move = False
+data_to_arduino = ""
 
 # CHECKER PIECES VARIABLES
 backup_old_white_pieces = [] # [{'cv':[x,y], 'ai':[row,col]}, {...}]
@@ -230,6 +231,12 @@ def main():
             
             # If AI turn
             if game.turn == WHITE:
+                data_to_arduino = game.print_arduino()
+                msg = data_to_arduino.encode('utf-8')
+                time.sleep(1)
+                com.write(msg)
+                com.flush()
+
                 led_player.on()
                 led_computer.off()
                 board_old = game.get_board().__dict__['board']
@@ -243,6 +250,12 @@ def main():
                 
                 game.ai_move(new_board, old, new)
             else:
+                data_to_arduino = game.print_arduino()
+                msg = data_to_arduino.encode('utf-8')
+                time.sleep(1)
+                com.write(msg)
+                com.flush()
+
                 led_player.off()
                 led_computer.on()
 
