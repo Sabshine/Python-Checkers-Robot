@@ -24,6 +24,7 @@ first_check = True
 move = False
 invalid_move = False
 data_to_arduino = ""
+update_screen_info = False
 
 # CHECKER PIECES VARIABLES
 backup_old_white_pieces = [] # [{'cv':[x,y], 'ai':[row,col]}, {...}]
@@ -137,6 +138,7 @@ def start_capture(cap, game):
             global old_row_col
             global new_row_col
             global move
+            global update_screen_info
             
             backup_old_white_pieces = copy.deepcopy(old_white_pieces)
             old_white_pieces = copy.deepcopy(white_pieces)
@@ -154,6 +156,7 @@ def start_capture(cap, game):
                 white_pieces[detect_movement(white_pieces, old_white_pieces, False)]['ai'] = new_row_col
                             
                 move = True
+                update_screen_info = False
             else:
                 old_white_pieces = copy.deepcopy(backup_old_white_pieces)
                 os.system('espeak -a 30 "No move detected, please try again"')
@@ -167,6 +170,7 @@ def reset_variables():
     global white_pieces
     global block_distance
     global difficulty
+    global update_screen_info
     first_check = True
     move = False
     invalid_move = False
@@ -175,6 +179,7 @@ def reset_variables():
     white_pieces = []
     block_distance = 0
     difficulty = None
+    update_screen_info = False
 
 def main():
     com = serial.Serial("/dev/ttyUSB0", 9600)
@@ -186,6 +191,7 @@ def main():
     global move
     global invalid_move
     global difficulty
+    global update_screen_info
     printed = False
 
     led_player.off()
@@ -212,11 +218,13 @@ def main():
             
             # If AI turn
             if game.turn == WHITE:
-                data_to_arduino = game.print_arduino()
-                msg = data_to_arduino.encode('utf-8')
-                time.sleep(1)
-                com.write(msg)
-                com.flush()
+                if update_screen_info == False:
+                    data_to_arduino = game.print_arduino()
+                    msg = data_to_arduino.encode('utf-8')
+                    time.sleep(1)
+                    com.write(msg)
+                    com.flush()
+                    update_screen_info = True
 
                 led_player.on()
                 led_computer.off()
@@ -231,11 +239,13 @@ def main():
                 
                 game.ai_move(new_board, old, new)
             else:
-                data_to_arduino = game.print_arduino()
-                msg = data_to_arduino.encode('utf-8')
-                time.sleep(1)
-                com.write(msg)
-                com.flush()
+                if update_screen_info == False:
+                    data_to_arduino = game.print_arduino()
+                    msg = data_to_arduino.encode('utf-8')
+                    time.sleep(1)
+                    com.write(msg)
+                    com.flush()
+                    update_screen_info = True
 
                 led_player.off()
                 led_computer.on()
