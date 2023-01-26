@@ -139,10 +139,10 @@ def normal_round(n):
 def calculate_new_position(old_white_pieces, white_pieces, block_distance):
     old_move = detect_movement(old_white_pieces, white_pieces, True)
     new_move = detect_movement(white_pieces, old_white_pieces, False)
-    print(old_move, new_move)
+    # print(old_move, new_move)
 
     if old_move != None and new_move != None:
-        print("No none received")
+        # print("No none received")
         old_position = old_white_pieces[old_move]['cv'] # Just one time repopulate all old AI rows and cols
         new_position = white_pieces[new_move]['cv']
     
@@ -168,9 +168,9 @@ def calculate_new_position(old_white_pieces, white_pieces, block_distance):
         espeak_move(old_row_col, new_row_col, "Player")
         
         # See coords of pieces
-        print("A piece has moved from the position: {} to a new position of: {}".format(old_white_pieces[detect_movement(old_white_pieces, white_pieces, False)]["cv"], white_pieces[detect_movement(white_pieces, old_white_pieces, False)]["cv"]))
-        print("Old row,col : " + str(old_row_col))
-        print("New row,col : " + str(new_row_col))
+        # print("A piece has moved from the position: {} to a new position of: {}".format(old_white_pieces[detect_movement(old_white_pieces, white_pieces, False)]["cv"], white_pieces[detect_movement(white_pieces, old_white_pieces, False)]["cv"]))
+        # print("Old row,col : " + str(old_row_col))
+        # print("New row,col : " + str(new_row_col))
 
         # Add new row,col to current "white_pieces"
         return old_row_col, new_row_col

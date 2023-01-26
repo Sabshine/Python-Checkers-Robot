@@ -88,7 +88,6 @@ def get_ai_move(old, new):
                 old_loc.append(group[0])
                 old_loc.append(group[1])
 
-    # print(skipped)
     return old_loc, new_loc, skipped
 
 def delete_skipped_pieces(skipped):
@@ -118,7 +117,6 @@ def start_capture(cap, game):
 
     # Invalid move
     if invalid_move:
-        print("in if invalid move")
         old_white_pieces = copy.deepcopy(backup_old_white_pieces)
         invalid_move = False
 
@@ -129,21 +127,12 @@ def start_capture(cap, game):
         white_pieces = copy.deepcopy(current_white_pieces)
         block_distance = copy.deepcopy(calculated_block_distance)
 
-        print("===================OLD===================")
-        print(old_white_pieces)
-        print("===================NEW===================")
-        print(white_pieces)
-
         if len(white_pieces) == 12:
             first_check = False
 
     # Do move
     # if cv.waitKey(1) & 0xFF == ord("s"):
-    if cv.waitKey(1) and button_move.is_pressed:
-        print("Current pieces and pieces of player:")
-        print(len(white_pieces))
-        print(game.get_player())
-            
+    if cv.waitKey(1) and button_move.is_pressed:      
         if first_check == False and len(white_pieces) == game.get_player():
             global old_row_col
             global new_row_col
@@ -164,17 +153,11 @@ def start_capture(cap, game):
             movement = detect_movement(white_pieces, old_white_pieces, False)
             if movement is not None:
                 white_pieces[detect_movement(white_pieces, old_white_pieces, False)]['ai'] = new_row_col
-            
-                print("===================OLD===================")
-                print(old_white_pieces)
-                print("===================NEW===================")
-                print(white_pieces)
                             
                 move = True
             else:
                 old_white_pieces = copy.deepcopy(backup_old_white_pieces)
                 os.system('espeak -a 30 "No move detected, please try again"')
-                print("No move detected")
 
 def reset_variables():
     global first_check
@@ -211,22 +194,17 @@ def main():
 
     while run:
         if difficulty == None:
-            # print(com.readline().decode("utf-8"))
             if com.in_waiting and "dif" in com.readline().decode("utf-8"):
                 difficulty = int(com.readline().decode("utf-8").strip("dif: "))
                 print(difficulty)
-                com.close()
         else:
             if difficulty != None and printed == False:
                 print("Sending stop to Arduino")
-                com.open()
-                if com.is_open:
-                    msg = "stop\n".encode('utf-8')
-                    time.sleep(1)
-                    com.write(msg)
-                    com.flush()
-                    com.close()
-                    printed = True
+                msg = "stop\n".encode('utf-8')
+                time.sleep(1)
+                com.write(msg)
+                com.flush()
+                printed = True
 
             detect_pieces_live(cap) # Check detection / camera position
             start_capture(cap, game)
@@ -236,13 +214,10 @@ def main():
             # If AI turn
             if game.turn == WHITE:
                 data_to_arduino = game.print_arduino()
-                com.open()
-                if com.is_open:
-                    msg = data_to_arduino.encode('utf-8')
-                    time.sleep(1)
-                    com.write(msg)
-                    com.flush()
-                    com.close()
+                msg = data_to_arduino.encode('utf-8')
+                time.sleep(1)
+                com.write(msg)
+                com.flush()
 
                 led_player.on()
                 led_computer.off()
@@ -258,12 +233,10 @@ def main():
                 game.ai_move(new_board, old, new)
             else:
                 data_to_arduino = game.print_arduino()
-                com.open()
-                if com.is_open:
-                    msg = data_to_arduino.encode('utf-8')
-                    time.sleep(1)
-                    com.write(msg)
-                    com.flush()
+                msg = data_to_arduino.encode('utf-8')
+                time.sleep(1)
+                com.write(msg)
+                com.flush()
 
                 led_player.off()
                 led_computer.on()
@@ -282,10 +255,8 @@ def main():
             
             if move == True:
                 result = game.select(old_row_col[0], old_row_col[1], new_row_col[0], new_row_col[1])
-                print("Result: " + str(result))
                 if result:
                     selection_result = game.select(old_row_col[0], old_row_col[1], new_row_col[0], new_row_col[1])
-                    print("Selection Result: " + str(selection_result))
                     if selection_result:
                         os.system('espeak -a 30 "Invalid move"')
 
@@ -298,13 +269,10 @@ def main():
                 led_player.off()
 
                 print("Sending reset to Arduino")
-                com.open()
-                if com.is_open:
-                    msg = "reset\n".encode('utf-8')
-                    time.sleep(1)
-                    com.write(msg)
-                    com.flush()
-                    com.close()
+                msg = "reset\n".encode('utf-8')
+                time.sleep(1)
+                com.write(msg)
+                com.flush()
 
                 game.reset()
                 reset_variables()
