@@ -237,7 +237,8 @@ def main():
             # If AI turn
             if game.turn == WHITE:
                 data_to_arduino = game.print_arduino()
-                send_to_arduino(com, data_to_arduino)
+                print(data_to_arduino)
+                # send_to_arduino(com, data_to_arduino)
 
                 led_player.on()
                 led_computer.off()
@@ -253,7 +254,8 @@ def main():
                 game.ai_move(new_board, old, new)
             else:
                 data_to_arduino = game.print_arduino()
-                send_to_arduino(com, data_to_arduino)
+                print(data_to_arduino)
+                # send_to_arduino(com, data_to_arduino)
 
                 led_player.off()
                 led_computer.on()
@@ -289,7 +291,7 @@ def main():
                 led_player.off()
 
                 print("Sending reset to Arduino")
-                send_to_arduino(com, "reset\n")
+                # send_to_arduino(com, "reset\n")
 
                 game.reset()
                 reset_variables()
