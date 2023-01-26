@@ -220,12 +220,13 @@ def main():
             if difficulty != None and printed == False:
                 print("Sending stop to Arduino")
                 com.open()
-                msg = "stop\n".encode('utf-8')
-                time.sleep(1)
-                com.write(msg)
-                com.flush()
-                com.close()
-                printed = True
+                if com.is_open:
+                    msg = "stop\n".encode('utf-8')
+                    time.sleep(1)
+                    com.write(msg)
+                    com.flush()
+                    com.close()
+                    printed = True
 
             detect_pieces_live(cap) # Check detection / camera position
             start_capture(cap, game)
@@ -236,11 +237,12 @@ def main():
             if game.turn == WHITE:
                 data_to_arduino = game.print_arduino()
                 com.open()
-                msg = data_to_arduino.encode('utf-8')
-                time.sleep(1)
-                com.write(msg)
-                com.flush()
-                com.close()
+                if com.is_open:
+                    msg = data_to_arduino.encode('utf-8')
+                    time.sleep(1)
+                    com.write(msg)
+                    com.flush()
+                    com.close()
 
                 led_player.on()
                 led_computer.off()
@@ -256,10 +258,12 @@ def main():
                 game.ai_move(new_board, old, new)
             else:
                 data_to_arduino = game.print_arduino()
-                msg = data_to_arduino.encode('utf-8')
-                time.sleep(1)
-                com.write(msg)
-                com.flush()
+                com.open()
+                if com.is_open:
+                    msg = data_to_arduino.encode('utf-8')
+                    time.sleep(1)
+                    com.write(msg)
+                    com.flush()
 
                 led_player.off()
                 led_computer.on()
@@ -295,11 +299,12 @@ def main():
 
                 print("Sending reset to Arduino")
                 com.open()
-                msg = "reset\n".encode('utf-8')
-                time.sleep(1)
-                com.write(msg)
-                com.flush()
-                com.close()
+                if com.is_open:
+                    msg = "reset\n".encode('utf-8')
+                    time.sleep(1)
+                    com.write(msg)
+                    com.flush()
+                    com.close()
 
                 game.reset()
                 reset_variables()
