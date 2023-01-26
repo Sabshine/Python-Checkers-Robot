@@ -217,7 +217,7 @@ def main():
         else:
             if difficulty != None and printed == False:
                 print("Sending stop to Arduino")
-                msg = "stop".encode('utf-8')
+                msg = "stop\n".encode('utf-8')
                 time.sleep(1)
                 com.write(msg)
                 com.flush()
@@ -276,7 +276,7 @@ def main():
                 led_player.off()
 
                 print("Sending reset to Arduino")
-                msg = "reset".encode('utf-8')
+                msg = "reset\n".encode('utf-8')
                 time.sleep(1)
                 com.write(msg)
                 com.flush()
