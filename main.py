@@ -205,23 +205,25 @@ def main():
     global difficulty
     printed = False
 
-    while run:
-        detect_pieces_live(cap) # Check detection / camera position
+    led_player.off()
+    led_computer.off()
 
+    while run:
         if difficulty == None:
             # print(com.readline().decode("utf-8"))
             if com.in_waiting and "dif" in com.readline().decode("utf-8"):
                 difficulty = int(com.readline().decode("utf-8").strip("dif: "))
                 print(difficulty)
-        # else:
-        #     if difficulty != None and printed == False:
-        #         print("Sending stop to Arduino")
-        #         msg = "stop".encode('utf-8')
-        #         time.sleep(1)
-        #         com.write(msg)
-        #         com.flush()
-        #         printed = True
+        else:
+            if difficulty != None and printed == False:
+                print("Sending stop to Arduino")
+                msg = "stop".encode('utf-8')
+                time.sleep(1)
+                com.write(msg)
+                com.flush()
+                printed = True
 
+            detect_pieces_live(cap) # Check detection / camera position
             start_capture(cap, game)
 
             clock.tick(FPS)
