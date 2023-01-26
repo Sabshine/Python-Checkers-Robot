@@ -273,6 +273,7 @@ def main():
                 com.write(msg)
                 com.flush()
 
+                printed = False
                 game.reset()
                 reset_variables()
                 
