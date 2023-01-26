@@ -19,7 +19,7 @@ class Board:
         return self.white_left - self.red_left + (self.white_kings * 0.5 - self.red_kings * 0.5)
 
     def get_pieces_arduino(self):
-        return "{};{};{};{}\n".format(self.red_left, self.red_kings, self.white_left, self.white_kings)
+        return "P {};K {};P {};K {}\n".format(self.red_left, self.red_kings, self.white_left, self.white_kings)
 
     def get_player_pieces(self):
         return self.red_left + self.red_kings

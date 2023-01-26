@@ -194,6 +194,12 @@ def reset_variables():
     block_distance = 0
     difficulty = None
 
+def send_to_arduino(com, data):
+    msg = data.encode('utf-8')
+    time.sleep(1)
+    com.write(msg)
+    com.flush()
+
 def main():
     com = serial.Serial("/dev/ttyUSB0", 9600)
     run = True
@@ -244,11 +250,13 @@ def main():
                 game.ai_move(new_board, old, new)
 
                 data_to_arduino = game.print_arduino()
+                send_to_arduino(com, data_to_arduino)
             else:
                 led_player.off()
                 led_computer.on()
 
                 data_to_arduino = game.print_arduino()
+                send_to_arduino(com, data_to_arduino)
 
             if game.winner() != None:
                 if game.winner() == (255, 255, 255):
@@ -280,10 +288,7 @@ def main():
                 led_player.off()
 
                 print("Sending reset to Arduino")
-                msg = "reset\n".encode('utf-8')
-                time.sleep(1)
-                com.write(msg)
-                com.flush()
+                send_to_arduino(com, "reset\n")
 
                 game.reset()
                 reset_variables()
