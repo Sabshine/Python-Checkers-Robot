@@ -23,7 +23,6 @@ difficulty = None
 first_check = True
 move = False
 invalid_move = False
-data_to_arduino = "12;0;12;0\n"
 
 # CHECKER PIECES VARIABLES
 backup_old_white_pieces = [] # [{'cv':[x,y], 'ai':[row,col]}, {...}]
@@ -194,12 +193,6 @@ def reset_variables():
     block_distance = 0
     difficulty = None
 
-# def send_to_arduino(com, data):
-#     msg = data.encode('utf-8')
-#     time.sleep(1)
-#     com.write(msg)
-#     com.flush()
-
 def main():
     com = serial.Serial("/dev/ttyUSB0", 9600)
     run = True
@@ -210,7 +203,6 @@ def main():
     global move
     global invalid_move
     global difficulty
-    global data_to_arduino
     printed = False
 
     while run:
@@ -221,14 +213,14 @@ def main():
             if com.in_waiting and "dif" in com.readline().decode("utf-8"):
                 difficulty = int(com.readline().decode("utf-8").strip("dif: "))
                 print(difficulty)
-        else:
-            if difficulty != None and printed == False:
-                print("Sending stop to Arduino")
-                msg = "stop".encode('utf-8')
-                time.sleep(1)
-                com.write(msg)
-                com.flush()
-                printed = True
+        # else:
+        #     if difficulty != None and printed == False:
+        #         print("Sending stop to Arduino")
+        #         msg = "stop".encode('utf-8')
+        #         time.sleep(1)
+        #         com.write(msg)
+        #         com.flush()
+        #         printed = True
 
             start_capture(cap, game)
 
@@ -236,10 +228,6 @@ def main():
             
             # If AI turn
             if game.turn == WHITE:
-                # data_to_arduino = game.print_arduino()
-                # print(data_to_arduino)
-                # send_to_arduino(com, data_to_arduino)
-
                 led_player.on()
                 led_computer.off()
                 board_old = game.get_board().__dict__['board']
@@ -253,13 +241,8 @@ def main():
                 
                 game.ai_move(new_board, old, new)
             else:
-                # data_to_arduino = game.print_arduino()
-                # print(data_to_arduino)
-                # send_to_arduino(com, data_to_arduino)
-
                 led_player.off()
                 led_computer.on()
-
 
             if game.winner() != None:
                 if game.winner() == (255, 255, 255):
@@ -290,8 +273,11 @@ def main():
                 led_computer.off()
                 led_player.off()
 
-                # print("Sending reset to Arduino")
-                # send_to_arduino(com, "reset\n")
+                print("Sending reset to Arduino")
+                msg = "reset".encode('utf-8')
+                time.sleep(1)
+                com.write(msg)
+                com.flush()
 
                 game.reset()
                 reset_variables()
