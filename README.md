@@ -3,7 +3,7 @@ A robot arm using the minimax algorithm for the checkers AI.
 This branch does **not** contains espeak or an Arduino connections. This project only needs a Raspberry Pi.
 
 Click on the gif below to watch a demo of this project
-[![Watch the video](https://github.com/Sabshine/Python-Checkers-Robot/blob/master/img/Demo_damrobot_raspberry.gif)](https://youtu.be/LuqGzSuD3s0)
+[![Watch the video](https://github.com/Sabshine/Python-Checkers-Robot/blob/master/img/Demo_damrobot.gif)](https://youtu.be/LuqGzSuD3s0)
 
 ## Hardware
 You need the following devices for this project: 
