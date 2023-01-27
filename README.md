@@ -14,7 +14,7 @@ There are two code files, [Screen - No Playing Page](https://github.com/Sabshine
 
 The other options [Screen - Playing Page](https://github.com/Sabshine/Python-Checkers-Robot/tree/arduino/Screen%20-%20Playing%20Page) has a screen after starting the game, that shows how many pieces and kings the player and computer have. It also states the difficulty of the game, which was selected in the difficulty selection screen.
 
-If you want to replicate the complete project, you have to download the 3D-model for the complete case. This files can be found in the folder:
+If you want to replicate the complete project, you have to download the 3D-model for the complete case. These files can be found in the folder:
 [Checkers Computer - Case](https://github.com/Sabshine/Python-Checkers-Robot/tree/3d-models/Checkers%20Computer%20-%20Case).
 
 
