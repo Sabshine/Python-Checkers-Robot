@@ -1,35 +1,18 @@
 # Python-Checkers-Robot
-A robot arm using the minimax algorithm for the checkers AI.
+This branch is a table of contents for all the branches in this project.
+![Demo 2 gif](img/Demo_damrobot_2.gif)
 
-Click on the image below to watch a preview of this project
-[![Watch the video](https://img.youtube.com/vi/LuqGzSuD3s0/maxresdefault.jpg)](https://youtu.be/LuqGzSuD3s0)
+## [Pi-espeak Branch](https://github.com/Sabshine/Python-Checkers-Robot/tree/pi-espeak)
+In this branch you can find the full project.
 
-## Hardware
-You need the following devices for this project: 
-- Arduino nano
-- Raspberry Pi 4b
-- uArm Swift Pro 
+## [Ver-raspberry Branch](https://github.com/Sabshine/Python-Checkers-Robot/tree/ver-raspberry)
+In this branch you can the Raspberry Pi only version of this project.
 
-You need the hardware components:
-- 128x64 OLED (attach to arduino)
-- Rotary Encoder (attach to arduino)
-- 2 LEDS
-- Speaker
-- 2 6x6x6 push button (6x6x5 can also be used)
+## [Ver-computer Branch](https://github.com/Sabshine/Python-Checkers-Robot/tree/ver-computer)
+In this branch you can find computer only version of this project.
 
-## 3d models
-All the 3d models can be found in the [3d-models](https://github.com/Sabshine/Python-Checkers-Robot/tree/3d-models) branch
+## [Arduino Branch](https://github.com/Sabshine/Python-Checkers-Robot/tree/arduino)
+All details about harware can be found in this branch.
 
-## Dependencies
-Install the following dependencies:
-```Python
-$ pip install pygame
-$ pip install opencv-python==4.6.0.66
-$ sudo apt-get install libsdl2-image-2.0.0
-$ pip install pyuarm
-$ sudo apt-get install espeak
-```
-Clone the following repo: https://github.com/uArm-Developer/uArm-Python-SDK/tree/2.0
-```Python
-$ python setup.py install
-```
+## [3d-models Branch](https://github.com/Sabshine/Python-Checkers-Robot/tree/3d-models)
+All the 3d models used in this project can be found in the branch.
