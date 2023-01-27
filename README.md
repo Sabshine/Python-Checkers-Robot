@@ -1,16 +1,13 @@
-# Python-Checkers-AI
-A checkers AI using the minimax algorithm.
+# Python-Checkers-Robot
+A robot arm using the minimax algorithm for the checkers AI.
 This branch also contains espeak and Arduino connections, which the [ver-raspberry](https://github.com/Sabshine/Python-Checkers-Robot/tree/ver-raspberry) branch doesn't.
 This branch is the most up-to-date.
 
-# Python-Checkers-Robot
-A robot arm using the minimax algorithm for the checkers AI.
-
 Click on the gif below to watch a full demo of this project
-[![Watch the video](img/readme/Demo_damrobot_1.gif)](https://youtu.be/F-rw_T0ELHk)
+[![Watch the video](https://github.com/Sabshine/Python-Checkers-Robot/blob/master/img/Demo_damrobot_1.gif)](https://youtu.be/F-rw_T0ELHk)
 
 Click on the gif below to watch a demo regarding invalid moves
-[![Watch the video](img/readme/Demo_damrobot_2.gif)]( https://youtu.be/5TMRmjDuwSk)
+[![Watch the video](https://github.com/Sabshine/Python-Checkers-Robot/blob/master/img/Demo_damrobot_2.gif)]( https://youtu.be/5TMRmjDuwSk)
 
 ## Hardware
 You need the following devices for this project: 
